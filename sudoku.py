@@ -94,6 +94,7 @@ class SudokuGame:
             if self.solved_board[row][column] == num:
                 print("Correct input.")
                 self.board[row][column] = num
+                self.print_sudoku(game.board)
             else:
                 print("Wrong input. Please try again.")
     
