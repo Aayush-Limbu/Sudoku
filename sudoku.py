@@ -63,40 +63,51 @@ class SudokuGame:
     def user_input(self):
         valid_input = str(list(range(1, 10)))
         while self.board != self.solved_board:
-            row = input("Please enter the row number: ")
-            if row == 'q':
-                print("Better luck next time.\nThe puzzle was: ")
-                self.print_sudoku(self.solved_board)
-                return False
-            if not row in valid_input:
-                print("Please enter a valid row number")
-                continue
-            
-            column = input("Please enter the column number: ")
-            if column == 'q':
-                print("Better luck next time.\nThe puzzle was: ")
-                self.print_sudoku(self.solved_board)
-                return False
-            if not column in valid_input:
-                print("Please enter a valid column number")
-                continue
+            row = input("Please enter the row number or 'h' for hint: ")
 
-            num = input("Please enter the input number: ") 
-            if num == 'q':
-                print("Better luck next time.\nThe puzzle was: ")
-                self.print_sudoku(self.solved_board)
-                return False
-            if not num in valid_input:
-                print("Please enter a valid number")
-                continue
-
-            row, column, num = int(row) - 1, int(column) - 1, int(num)
-            if self.solved_board[row][column] == num:
-                print("Correct input.")
-                self.board[row][column] = num
-                self.print_sudoku(game.board)
+            if row == 'h':
+                for row in range(0,9):
+                    for column in range(0,9):
+                        if self.board[row][column] == 0:
+                            self.board[row][column] = self.solved_board[row][column]
+                            self.print_sudoku(self.board)
+                            return self.user_input()
             else:
-                print("Wrong input. Please try again.")
+                if row == 'q':
+                    print("Better luck next time.\nThe puzzle was: ")
+                    self.print_sudoku(self.solved_board)
+                    return False
+                if not row in valid_input:
+                    print("Please enter a valid row number")
+                    continue
+                
+                column = input("Please enter the column number: ")
+                if column == 'q':
+                    print("Better luck next time.\nThe puzzle was: ")
+                    self.print_sudoku(self.solved_board)
+                    return False
+                if not column in valid_input:
+                    print("Please enter a valid column number")
+                    continue
+
+                        
+
+                num = input("Please enter the input number: ") 
+                if num == 'q':
+                    print("Better luck next time.\nThe puzzle was: ")
+                    self.print_sudoku(self.solved_board)
+                    return False
+                if not num in valid_input:
+                    print("Please enter a valid number")
+                    continue
+
+                row, column, num = int(row) - 1, int(column) - 1, int(num)
+                if self.solved_board[row][column] == num:
+                    print("Correct input.")
+                    self.board[row][column] = num
+                    self.print_sudoku(game.board)
+                else:
+                    print("Wrong input. Please try again.")
     
         print("Congratulations! You solved the puzzle.")
         return True
